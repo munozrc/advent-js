@@ -1,0 +1,23 @@
+{
+  "name": "advent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/munozrc/advent-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/munozrc/advent-js/issues"
+  },
+  "homepage": "https://github.com/munozrc/advent-js#readme",
+  "devDependencies": {
+    "vitest": "0.25.1"
+  }
+}
