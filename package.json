@@ -1,23 +1,21 @@
 {
-  "name": "advent",
-  "version": "1.0.0",
-  "description": "",
+  "name": "advent-js",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Solutions to AdventJS using TDD",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/munozrc/advent-js.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/munozrc/advent-js/issues"
-  },
-  "homepage": "https://github.com/munozrc/advent-js#readme",
   "devDependencies": {
+    "standard": "17.0.0",
     "vitest": "0.25.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
   }
 }
