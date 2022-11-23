@@ -21,5 +21,5 @@ export default function createXmasTree (height) {
     treeTop[floor] = gap + treeLeaves + gap
   }
 
-  return [treeTop.join('\n'), truck].join('\n')
+  return [...treeTop, truck].join('\n')
 }
