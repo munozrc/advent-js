@@ -16,6 +16,7 @@ describe('Challenge 07', () => {
 
   it('should return false if it is not a palindrome', () => {
     expect(checkPart('midu')).toBe(false)
+    expect(checkPart('lolol')).toBe(true)
   })
 
   it('should return true if not a palindrome but removing a letter', () => {
