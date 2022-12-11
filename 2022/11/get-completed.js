@@ -5,20 +5,20 @@
  * @returns string
  */
 export default function getCompleted (part, total) {
-  const [hours, minutes, seconds] = part.split(':')
-  const [totalHours, totalMinutes, totalSeconds] = total.split(':')
+  const partTime = part.split(':')
+  const totalTime = total.split(':')
 
-  const partInSeconds = hours * 3600 + minutes * 60 + seconds * 1
-  const totalInSeconds = totalHours * 3600 + totalMinutes * 60 + totalSeconds * 1
+  const partSeconds = partTime[0] * 3600 + partTime[1] * 60 + (+partTime[2])
+  const totalSeconds = totalTime[0] * 3600 + totalTime[1] * 60 + (+totalTime[2])
 
-  let mcd = partInSeconds
-  let tmp = totalInSeconds
+  let mcd = partSeconds
+  let temp = totalSeconds
 
-  while (tmp) {
-    const t = tmp
-    tmp = mcd % tmp
-    mcd = t
+  while (temp) {
+    const aux = temp
+    temp = mcd % temp
+    mcd = aux
   }
 
-  return `${partInSeconds / mcd}/${totalInSeconds / mcd}`
+  return `${partSeconds / mcd}/${totalSeconds / mcd}`
 }
