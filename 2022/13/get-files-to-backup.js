@@ -9,8 +9,8 @@ export default function getFilesToBackup (lastBackup, changes) {
     new Set(
       changes
         .filter((file) => file[1] > lastBackup)
-        .sort((a, b) => a[0] - b[0])
         .map((file) => file[0])
+        .sort((a, b) => a - b)
     )
   )
 }
