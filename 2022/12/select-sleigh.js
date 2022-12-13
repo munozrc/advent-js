@@ -5,7 +5,7 @@
  * @returns
  */
 export default function selectSleigh (distance, sleighs) {
-  const bestSled = sleighs.reverse()
-    .find(({ consumption }) => distance * consumption <= 20)
-  return bestSled ? bestSled.name : null
+  const best = sleighs.filter(({ consumption }) => consumption * distance <= 20)
+  best.unshift({ name: null })
+  return best[best.length - 1].name
 }
