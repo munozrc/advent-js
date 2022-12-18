@@ -16,19 +16,20 @@ export default function decorateTree (base) {
     RB: 'P'
   }
 
-  const arr = base
-    .split(' ')
-    .slice(1)
-    .reduce((prev, _, pos) => {
-      const slideTree = prev[pos].split(' ')
-      const tree = slideTree.slice(1).map((x, i, a) => {
-        const key = slideTree[i] + x
-        const result = ornaments[key]
-        return result
-      })
-      prev.push(tree.join(' '))
-      return prev
-    }, [base])
+  const initArrayOrnaments = base.split(' ')
 
-  return arr.reverse()
+  const createTreeFloor = (allFloors) => {
+    const prev = allFloors.at(-1)
+    const newTreeFloor = prev
+      .slice(1)
+      .map((letter, pos) => ornaments[prev[pos] + letter])
+
+    return [...allFloors, newTreeFloor]
+  }
+
+  return initArrayOrnaments
+    .slice(1)
+    .reduce(createTreeFloor, [initArrayOrnaments])
+    .map(floor => floor.join(' '))
+    .reverse()
 }
