@@ -5,18 +5,18 @@
  * @returns Array<string>
  */
 export default function carryGifts (gifts, maxWeight) {
-  const stack = []
+  const addGift = (acc, gift) => {
+    const prev = acc.at(-1)
+    const length = gift.length
 
-  gifts
+    acc.length && prev.replace(/ /g, '').length + length <= maxWeight
+      ? acc[acc.length - 1] += ` ${gift}`
+      : acc.push(gift)
+
+    return acc
+  }
+
+  return gifts
     .filter(gift => gift.length <= maxWeight)
-    .forEach((gift) => {
-      (
-        stack.length &&
-        stack.at(-1).replace(/ /g, '').length + gift.length <= maxWeight
-      )
-        ? stack[stack.length - 1] += ` ${gift}`
-        : stack.push(gift)
-    })
-
-  return stack
+    .reduce(addGift, [])
 }
