@@ -7,24 +7,16 @@
 export default function carryGifts (gifts, maxWeight) {
   const stack = []
 
-  gifts.forEach((gift) => {
-    const length = gift.length
-
-    if (!stack.length && length <= maxWeight) {
-      stack.push(gift)
-      return
-    }
-
-    if (stack.length && stack.at(-1).replaceAll(' ', '').length + length > maxWeight) {
-      stack.push(gift)
-      return
-    }
-
-    if (stack.length && length <= maxWeight) {
-      const lastGift = stack.pop()
-      stack.push(lastGift + ' ' + gift)
-    }
-  })
+  gifts
+    .filter(gift => gift.length <= maxWeight)
+    .forEach((gift) => {
+      (
+        stack.length &&
+        stack.at(-1).replace(/ /g, '').length + gift.length <= maxWeight
+      )
+        ? stack[stack.length - 1] += ` ${gift}`
+        : stack.push(gift)
+    })
 
   return stack
 }
