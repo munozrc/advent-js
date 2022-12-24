@@ -4,41 +4,46 @@
  * @returns {Array<number>}
  */
 export default function executeCommands (commands) {
-  const stack = [0, 0, 0, 0, 0, 0, 0, 0]
-  let currentCommand = 0
+  const stack = {
+    V00: 0,
+    V01: 0,
+    V02: 0,
+    V03: 0,
+    V04: 0,
+    V05: 0,
+    V06: 0,
+    V07: 0
+  }
+
+  let pointer = 0
 
   const instructions = {
     MOV: ([raw, register]) => {
-      const value = isNaN(+raw) ? stack[+raw.replace('V', '')] : +raw
-      const position = +register.replace('V', '')
-      stack[position] = value
-      currentCommand++
+      const value = raw.startsWith('V') ? stack[raw] : +raw
+      stack[register] = value
+      pointer++
     },
     DEC: ([register]) => {
-      const position = +register.replace('V', '')
-      stack[position] = (((stack[position] - 1) % 256) + 256) % 256
-      currentCommand++
+      stack[register] = (((stack[register] - 1) % 256) + 256) % 256
+      pointer++
     },
     INC: ([register]) => {
-      const position = +register.replace('V', '')
-      stack[position] = (stack[position] + 1) % 256
-      currentCommand++
+      stack[register] = (stack[register] + 1) % 256
+      pointer++
     },
-    ADD: ([firstRegister, secondRegister]) => {
-      const firstNumberPos = +firstRegister.replace('V', '')
-      const secondRegisterPos = +secondRegister.replace('V', '')
-      stack[firstNumberPos] += stack[secondRegisterPos]
-      currentCommand++
+    ADD: ([first, second]) => {
+      stack[first] = (stack[first] + stack[second]) % 256
+      pointer++
     },
     JMP: ([command]) => {
-      currentCommand = stack[0] !== 0 ? +command : currentCommand + 1
+      pointer = stack.V00 > 0 ? +command : pointer + 1
     }
   }
 
-  while (currentCommand < commands.length) {
-    const [operator, args] = commands[currentCommand].split(' ')
+  while (pointer < commands.length) {
+    const [operator, args] = commands[pointer].split(' ')
     instructions[operator](args.split(','))
   }
 
-  return stack
+  return Object.values(stack)
 }
