@@ -15,34 +15,34 @@ export default function executeCommands (commands) {
     V07: 0
   }
 
-  let pointer = 0
-
   const instructions = {
     MOV: ([raw, register]) => {
       const value = raw.startsWith('V') ? stack[raw] : +raw
       stack[register] = value
-      pointer++
+      // let mov = x.split(",")[0].split(" ")[1]
+      // cpu[+x.at(-1)] = (cpu[+mov.at(-1)] * +mov.startsWith("V")) + ~~mov
+      // stack[register] = (stack[raw]) + ~~raw
+      console.log({ r: (stack[raw]) })
     },
     DEC: ([register]) => {
       stack[register] = (((stack[register] - 1) % 256) + 256) % 256
-      pointer++
     },
     INC: ([register]) => {
       stack[register] = (stack[register] + 1) % 256
-      pointer++
     },
     ADD: ([first, second]) => {
       stack[first] = (stack[first] + stack[second]) % 256
-      pointer++
     },
-    JMP: ([command]) => {
-      pointer = stack.V00 > 0 ? +command : pointer + 1
+    JMP: ([position], command) => {
+      const beforeJump = commands
+        .slice(+position, (commands.indexOf(command) + 1) * !!stack.V00)
+      commands = commands.concat(beforeJump)
     }
   }
 
-  while (pointer < commands.length) {
+  for (let pointer = 0; pointer < commands.length; pointer++) {
     const [operator, args] = commands[pointer].split(' ')
-    instructions[operator](args.split(','))
+    instructions[operator](args.split(','), commands[pointer])
   }
 
   return Object.values(stack)
